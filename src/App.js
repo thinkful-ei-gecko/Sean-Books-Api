@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 import './App.css';
 import FilterBar from './FilterBar';
 import Search from './Search';
@@ -8,13 +7,14 @@ import Results from './Results';
 
 class App extends React.Component {
   state={
-    booksList:'',
+    booksList: [],
     currentVolume:'',
-
   }
 
   updateStateVolumeList(response){
-      this.setState({booksList:response})
+      this.setState({
+        booksList: response
+      })
   }
 
   updateCurrentVolumeState(response){
@@ -22,13 +22,15 @@ class App extends React.Component {
   }
 
   getBooks = query => {
-    console.log(query)
     this.updateCurrentVolumeState(query);
     const baseURL = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
     console.log(baseURL)
       fetch(baseURL)
       .then(response => response.ok ? response.json() : Promise.reject("Something went wrong here"))
-      .then(response => this.updateStateVolumeList(response))
+      .then(response => {
+        this.updateStateVolumeList(response.items)
+        console.log(this.state.booksList)
+      })
       
   }
 
@@ -36,7 +38,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Header />
         <Search getBooks={this.getBooks} />
+        <FilterBar />
+        <Results books={this.state.booksList} />
       </div>
     )
   }
