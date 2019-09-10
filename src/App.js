@@ -37,7 +37,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <Search getBooks={this.getBooks} />
-        <Results books={this.state.booksList} />
       </div>
     )
   }

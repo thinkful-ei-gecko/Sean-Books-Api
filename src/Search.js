@@ -17,6 +17,7 @@ class Search extends React.Component {
             <form className='searchBar' onSubmit={this.handleSubmit}>
                 <input type="text" id='searchValue' placeholder='Enter a book'></input>
                 <button type="submit">Submit</button>
+                <Results onUpdate={e => props.render(this.state.BooksList)} />
             </form>
         )
     }
